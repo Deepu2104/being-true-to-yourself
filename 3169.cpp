@@ -2,7 +2,7 @@
 3169. Count Days Without Meetings
 
 
-Line Sweep Algorithm :
+Line Sweep Algorithm: 
 
 map<int,int> freq;
 

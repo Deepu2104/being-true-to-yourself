@@ -1,6 +1,8 @@
 2033. Minimum Operations to Make a Uni-Value Grid
 
 
+Sorting and finding median
+
 class Solution {
 public:
     int minOperations(vector<vector<int>>& grid, int x) {

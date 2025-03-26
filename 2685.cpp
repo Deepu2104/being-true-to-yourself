@@ -1,43 +1,74 @@
-2685. Count the Number of Complete Components
-
-
-static struct DSU {
-    vector<int> e;
-    DSU(int N) { e = vector<int>(N + 1, -1); }
-
-    // get representive component (uses path compression)
-    int leader(int x) { return e[x] < 0 ? x : e[x] = leader(e[x]); }
-
-    bool same_set(int a, int b) { return leader(a) == leader(b); }
-
-    int size(int x) { return -e[leader(x)]; }
-
-    bool unite(int x, int y) {  // union by size
-        x = leader(x), y = leader(y);
-        if (x == y) return false;
-        if (e[x] > e[y]) swap(x, y);
-        e[x] += e[y];
-        e[y] = x;
-        return true;
-    }
-};
-
 class Solution {
+    
+    struct DSU {
+        vector<int> parent;
+        vector<int> size;
+
+        DSU(int n){
+            parent.resize(n + 1);
+            iota(parent.begin(), parent.end(), 0);
+            size.resize(n + 1, 1);
+        }
+
+        int find_parent(int node){
+            if(node == parent[node]) return node;
+            return parent[node] = find_parent(parent[node]);
+        }
+
+        void merge(int u, int v){
+            u = find_parent(u);
+            v = find_parent(v);
+
+            if(u != v){
+                
+                // bade graph me chota graph add hota h
+
+                if(size[u] <= size[v]){
+                    parent[u] = v;
+                    size[v] += size[u];
+                }else{
+                    parent[v] = u;
+                    size[u] += size[v];
+                }
+            }
+        }
+
+        int size_component(int node){
+            return size[find_parent(node)];
+        }
+
+        int leader(int node){
+            return find_parent(node);
+        }
+    };
+
 public:
     int countCompleteComponents(int n, vector<vector<int>>& edges) {
-        
-        DSU dsu(n + 5);
-        vector<int> indegree(n + 5);
-        for(auto el : edges) dsu.unite(el[0], el[1]), indegree[el[0]]++, indegree[el[1]]++;
-        vector<int> comp[n];
-        for(int i = 0; i < n; i++) comp[dsu.leader(i)].push_back(i);
-        int cnt = 0;
-        for(int i = 0; i < n; i++){
-            int sz = comp[i].size(), sum = 0;
-            if(sz == 0) continue;
-            for(auto j : comp[i])  sum += indegree[j];
-            if(sum == (sz * (sz - 1))) cnt++;
+        int m = edges.size();
+        DSU dsu(n);
+
+        for(int i = 0; i < m; i++){
+            int u = edges[i][0], v = edges[i][1];
+            dsu.merge(u, v);
         }
-        return cnt;
+
+        vector<int> count_edges(n);
+        for(int i = 0; i < m; i++){
+            int u = edges[i][0], v = edges[i][1];
+            int leader = dsu.leader(u);
+            count_edges[leader]++;
+        }
+
+        auto calc = [&](int x){
+            return (x * (x - 1)) / 2;
+        };
+
+        int answer = 0;
+        for(int i = 0; i < n; i++){
+            if( i == dsu.leader(i) ){
+                if(calc(dsu.size_component(i)) == count_edges[i]) answer++;
+            }
+        }
+        return answer;
     }
 };

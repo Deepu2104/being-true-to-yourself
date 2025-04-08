@@ -30,14 +30,14 @@ This repo isn't just a tracker — it’s a showcase of:
 If you're a recruiter or engineer reviewing this:
 - Please feel free to explore any folder — each represents a new challenge and learning.
 - I’m always open to feedback or opportunities to collaborate on bigger engineering challenges.
-- Let’s connect! 🔗 [LinkedIn](https://www.linkedin.com/in/your-profile) | 📧 your.email@example.com
+- Let’s connect! 🔗 [LinkedIn](https://www.linkedin.com/in/-deepak-singhh/) | 📧 ds1354586@gmail.com
 
 ---
 
 ## 🙌 Let’s Connect
 
 If you’re solving DSA too, feel free to fork, star 🌟, or contribute ideas. Let’s grow together.  
-**#100DaysOfCode #LeetCodeDaily #DSAWithDiscipline**
+#LeetCodeDaily #DSAWithDiscipline**
 
 ---
 
